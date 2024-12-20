@@ -1,0 +1,46 @@
+#include <stdio.h> 
+#include <stdlib.h> 
+#include <time.h> 
+
+int main() {
+    short unsigned int acertos=1, tentativas=0, seqComp[acertos], seqUser[acertos], errou=0;
+    char inter='V';
+    srand(time(NULL));
+    printf("Números vão aparecer na tela por alguns segundos, digite todos eles na ordem em que forem aparecendo, desde o primeiro número\n");
+    printf("até o último que apareceu!\nBoa sorte.\n(Aperte ENTER para começar)\n");
+    while(inter!='\n') 
+        scanf("%c", &inter);
+    printf("\n");
+    system("clear");
+    //Repetição principal:
+    do {
+        seqComp[acertos-1]=rand()%8 + 1;
+        printf("%hu\n", seqComp[acertos-1]);
+        system("sleep 1");
+        printf("\n");
+        system("clear");
+        printf("Qual foi a sequência de números até agora?\n");
+        for(short unsigned int i=0; i<acertos; i++) {
+            seqUser[i]=0;
+            scanf(" %hu", &seqUser[i]);
+        }
+        system("clear");
+        //Validar se está certo 
+        for(short unsigned int i=0; i<acertos; i++) 
+            if (seqUser[i]!=seqComp[i]) {
+                errou=1;
+                break;
+            } 
+        tentativas++;
+        if(errou)
+            printf("Você perdeu\n");
+        else 
+            acertos++;
+    } while(!errou);
+    printf("A sequência correta era:\n ");
+    for(short int i=0; i<acertos; i++)
+        printf("%hu ", seqComp[i]);
+    printf("\nVocê chegou em %hu números!", tentativas);
+
+    return 0;
+}
