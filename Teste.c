@@ -53,10 +53,10 @@ int main () {
 
     //Repetição principal
     do{
-        system("clear");
+        
         printf("\nAperte ENTER para continuar...\n"); 
         getchar(); 
-
+        system("clear");
         //Virando as cartas Zeca
         printf("Cartas Zeca: ");
         for(int i=0; i<7; i++){
