@@ -1,0 +1,175 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h> 
+
+int main(){
+	int esc,num=0, tent=0, fim=0, corr;
+	char enter, ecc; 
+	int jog1, jog2; 
+	//Lê quantos pares vão ser
+    do{
+		corr=1;
+        printf("Digite quantos pares vão ser:\n"); 
+        scanf(" %c", &ecc); 
+
+		printf("\n"); 
+        system("clear");
+        
+
+        if((ecc<'0') || (ecc>'9')){
+            printf("Digite apenas números!\n"); 
+			corr=0;
+		}
+
+    }while(!corr);
+	esc = (ecc-'0'); 
+	
+    //Criando
+	int cartas[esc*2];
+	int cont[esc*2]; 
+	int barai[esc*2];
+	int valida[esc*2];
+	srand(time(NULL)); 
+	
+	//zerar o cont e colocar valida como 1 
+	for(int i =0; i<(esc*2); i++){
+		cont[i]=0; 
+		valida[i]=1;
+	}
+	for(int i=0; i<(esc*2); i++){
+		barai[i] = rand()%esc + 1;
+		for(int k=0; k<i; k++){
+			if(barai[i]==barai[k]){
+				if(cont[k]==1){
+					i--; 
+					break; 
+				}
+				cont[k]++;
+			}
+		} 
+		 
+	}
+	
+	do{
+		
+		int x = rand()%(esc*2);
+			if(barai[x]){
+				cartas[num] = barai[x];
+				barai[x] = 0;
+				num++;
+			}
+		}while(num < esc*2);
+		
+		
+		
+		/*for(int i=0; i<(esc*2); i++){
+			printf("[] ");
+		}
+		printf("\n");
+		
+		for(int i=0; i<(esc*2); i++){
+			printf("%02d ", i);
+		}
+		*/
+		
+		
+	//Mostra as cartas pra cima e depois mostra elas pra baixo de novo
+	do{
+		do{
+			corr=1;
+			//Parte que desenha as cartas viradas pra baixo
+			for(int i=0; i<(esc*2); i++){
+				if(valida[i])
+					printf("[] "); 
+				else 
+					printf("X "); 
+			}
+       	 		printf("\n");
+      	  		for(int i=0; i<(esc*2); i++){
+				if(valida[i])
+					printf("%02d ", i);
+				else 	
+					printf("  "); 
+			}
+			//Parte que lê os numeros
+			printf("\nDigite o número de duas cartas para virar elas para cima:\n");
+		
+				scanf(" %d %d", &jog1, &jog2); 
+				printf("\n"); 
+
+                //parte que valida os numeros
+				if(jog1>=0 && jog1<(esc*2) && jog2>=0 && jog2<(esc*2)){
+					if(jog1==jog2){
+						system("clear"); 
+						corr=0; 
+						printf("Os números escolhidos não podem ser iguais!\n"); 
+					}
+					if(valida[jog1] && valida[jog2]){
+						if(corr==1)
+							break;
+					}else{ 
+						system("clear");
+						printf("!Você escolheu número(s) que já foram tirados da mesa!\nDigite novamente!:\n");
+						corr=0;
+					}	
+				}else{
+					corr=0;
+					system("clear");
+					printf("\nVocê escolheu um número maior/menor do que o número de pares!\nDigite novamente:\n");
+				}		
+		}while(!corr);
+		
+		printf("\n"); 
+		
+		
+		system("clear"); 
+		//Parte que desenha as cartas viradas pra cima 
+		for(int i=0; i<(esc*2); i++){
+			if(valida[i])
+				if(i!=jog1 && i!=jog2){
+					printf("[] "); 
+				}else{
+					printf("%02d ", cartas[i]); 
+				}
+			else 
+				printf("X ");
+		}
+		printf("\n"); 
+		for(int i=0; i<(esc*2); i++){
+			if(valida[i])
+				printf("%02d ", i);
+			else 
+				printf("  ");
+		}
+		if(cartas[jog1]==cartas[jog2]){
+			printf("Você acertou!"); 
+			valida[jog1]=valida[jog2]=0;
+		}else{
+			printf("Você errou!");
+		}			
+		printf("\n"); 
+		printf("Aperte ENTER para continuar");
+		enter='k'; 
+		while(getchar()!='\n');
+		//Somando os números de tentativas
+		tent++; 
+		//Isso aqui é pra só apagar os números quando a pessoa digitar enter
+		do{
+			scanf("%c", &enter);
+		}while(enter!='\n');
+		system("clear");  
+		//Verifica se o jogo acabou
+		for (int i=0; i<(esc*2); i++){
+			if (!valida[i])
+				fim++; 
+		}
+		if(fim==(esc*2)) 
+			break; 
+		else 
+			fim=0;
+	}while(1); 
+	//FIm do jogo
+	printf("Fim de JOGO!\nVocê venceu em %d Tentativas!", tent); 
+
+	return 0;
+}
