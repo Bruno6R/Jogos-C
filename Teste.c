@@ -53,6 +53,7 @@ int main () {
 
     //Repetição principal
     do{
+        system("clear");
         printf("\nAperte ENTER para continuar...\n"); 
         getchar(); 
 
