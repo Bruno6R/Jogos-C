@@ -1,8 +1,7 @@
 #include <stdio.h> 
 #include <stdlib.h> 
+#include <time.h>
 #include <string.h> 
-
-
 
 void lernomes (int val){
     if(val==1){
@@ -158,8 +157,127 @@ void frases(){
     
 }
 
+void vetorxy() {
+    int x, y; 
+    printf("Digite os valores de \"x\" e \"y\"(sendo eles maiores que 0): \n"); 
+    int erro=1;
+    //validação de x
+    do{
+        printf("Digite o valor de x:\n"); 
+        scanf(" %d", &x);
+        //while para evitar de characteres entrarem no buffer
+        while(getchar()!='\n');
+        erro = x<=0? 1 : 0; 
+        if(erro)
+            printf("X tem que ser maior que 0!, digite novamente:\n");
+    }while(erro);
+    //validação de y
+    do{
+        printf("Digite o valor de y:\n"); 
+        scanf(" %d", &y); 
+        //o while(getchar) também evita de letras de entrarem nas variaveis inteiras! basta iniciar erro como 1
+        while(getchar()!='\n'); 
+        erro = y<=0? 1 : 0; 
+        if(erro)
+            printf("Y tem que ser maior que 0!, digite novamente:\n");
+    }while(erro);
+    //vetores principais
+    int ve1[x],  ve2[y]; 
+    //Preenchendo os vetores com números aleatórios não repetidos
+    int col=0; 
+    //vetor x 
+    while(1){
+        erro=0;
+        ve1[col]=rand()%(x+y+1);
+        //for para verificar se existem números iguais no vetor
+        for(int i=0; i<col; i++){
+            if(ve1[col]==ve1[i]){
+                erro=1;
+                break;
+            }
+        }
+        col = erro? col : (col+1);
+        if(col==x)
+            break;
+    }
+    //vetor y 
+    col=0;
+    while(1){
+        erro=0;
+        ve2[col]=rand()%(x+y+1); 
+        for(int i=0; i<col; i++) 
+            if(ve2[i]==ve2[col]){
+                erro=1; 
+                break; 
+            }
+        col = erro? col : (col+1);
+        if(col==y)
+            break; 
+
+    }
+    //Mostrando vetores
+    printf("\nVetor x:\n"); 
+    for(int i=0; i<x; i++)
+        printf("[%d] ", ve1[i]);
+    printf("\nVetor y:\n"); 
+    for(int i=0; i<y; i++)
+        printf("[%d] ", ve2[i]);
+
+    //descobrindo números exclusivos do vetor x e os simaleres entre x e y
+    int exX[x], igual; 
+    int tam; 
+    tam = x>y? y : x; 
+    int sim[tam], cont=0; 
+    col=0;
+
+    for(int i=0; i<x; i++){
+        igual=0;
+        for(int j=0; j<y; j++)
+            if(ve1[i]==ve2[j]){
+                igual=1;
+                sim[cont]=ve1[i];
+                cont++;
+                break; 
+            }
+        if(!igual){
+            exX[col]=ve1[i]; 
+            col++; 
+        }
+    }
+
+    printf("\nValores exclusivos do vetor x:\n"); 
+    for(int i=0; i<(col); i++)
+        printf("[%d] ", exX[i]); 
+
+    //exclusivos em y 
+    int exY[y];
+    col=0;
+    for(int i=0; i<y; i++){
+        igual=0;
+        for(int j=0; j<cont; j++)
+            if(ve2[i]==sim[j]){
+                igual=1;
+                break;
+            }
+        if(!igual){
+            exY[col]=ve2[i];
+            col++;
+        }
+    }
+    printf("\nValores exclusivos do vetor y:\n"); 
+    for(int i=0; i<(col); i++)
+        printf("[%d] ", exY[i]); 
+    printf("\nValores comuns nos dois:\n");
+    for(int i=0; i<cont; i++)
+        printf("[%d] ", sim[i]); 
+
+}
+
+
 int main () {
-    int qual=23;
+    //srand comentada até o codigo funcionar!!!
+    //srand(time(NULL)); 
+    int qual=4;
     //Ler 3 nomes e devolver esses tres nomes na ordem certa 
     //qual=1
     lernomes(qual);
@@ -173,5 +291,19 @@ int main () {
     //qual=24
     if(qual==24)
         frases();
+    //Questão 4
+    /*
+    Ler do usuário dois valores inteiros "x", "y" alimentando dois vetores de 
+    tamanho "x" e "y" com números inteiros aleatórios, não repetitivos, sorteados
+    no intervalo de 0 e x+y(inclusive)
+    faça a impressão das seguintes informações: 
+    a) Vetores x e y
+    b) Todos os números exclusivos do vetor x
+    c) Números exclusivos do vetor y
+    d) Números comuns nos dois vetores 
+    */ 
+    if (qual==4)
+        vetorxy(); 
+    
     return 0;
 }
