@@ -38,7 +38,7 @@ int main () {
             printf("-");
         printf("\n");
     }
-    //substituir isso por clear
+    
     setbuf(stdin, NULL);
     system("sleep 0.7");
     system("clear");
