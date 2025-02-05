@@ -40,39 +40,63 @@ int main () {
     }
     //substituir isso por clear
     setbuf(stdin, NULL);
-    getchar();
+    system("sleep 0.7");
     system("clear");
 
     //Organizando: 
     printf("Organizando os valores:\n");
-    int guarda;
+    int guarda, valorTrocado, trocando[n-1];
     for(int i=1; i<n; i++){
         guarda=vetor[i]; 
         
         //Mostrando os valores guardados e onde vão trocar
         for(int k=0; k<n; k++){
             printf("[%02d]: ", vetor[k]);
+            //Colorindo
+            if(k==i)
+                printf("\33[33m");
             for(int l=0; l<vetor[k]; l++)
                 printf("-");           
             if(k==i)
-                printf("   <--- Pegando esse valor aqui!");
+                printf("\33[39m   <--- Pegando esse valor aqui!");
             printf("\n");
         }
+
         setbuf(stdin, NULL);
-        getchar();
+        system("sleep 0.7");
         system("clear");
 
+        int col=0;
         for(int j=(i-1); j>(-1); j--){
             if(guarda<=vetor[j]){
                 vetor[j+1] = vetor[j];
+                trocando[col++]=j;
             }else{
                 vetor[j+1] = guarda;
+                valorTrocado=(j+1); 
                 break;
             }
             if(j==0){
                 vetor[j]=guarda;
+                valorTrocado=j;
             }
         }
+
+        //Mostrando onde foram parar os valores
+        for(int k=0; k<n; k++){
+            printf("[%02d]: ", vetor[k]);
+            //Colorindo
+            if(k==valorTrocado)
+                printf("\33[32m");
+            for(int l=0; l<vetor[k]; l++)
+                printf("-");           
+            if(k==valorTrocado)
+                printf("\33[39m   <--- E trocando com esse!");
+            printf("\n");
+        }
+        setbuf(stdin, NULL);
+        system("sleep 0.7");
+        system("clear");
     }  
 
 
