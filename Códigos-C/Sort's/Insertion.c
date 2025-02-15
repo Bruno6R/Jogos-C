@@ -38,9 +38,8 @@ int main () {
             printf("-");
         printf("\n");
     }
-    
-    setbuf(stdin, NULL);
-    system("sleep 0.7");
+
+    system("sleep 1");
     system("clear");
 
     //Organizando: 
@@ -58,12 +57,12 @@ int main () {
             for(int l=0; l<vetor[k]; l++)
                 printf("-");           
             if(k==i)
-                printf("\33[39m   <--- Pegando esse valor aqui!");
+                printf("\33[39m   <--- guardando esse valor aqui!");
             printf("\n");
         }
 
-        setbuf(stdin, NULL);
-        system("sleep 0.7");
+        //printf("Valor guardado: [%d]", guarda);
+        system("sleep 1");
         system("clear");
 
         int col=0;
@@ -94,8 +93,9 @@ int main () {
                 printf("\33[39m   <--- E trocando com esse!");
             printf("\n");
         }
-        setbuf(stdin, NULL);
-        system("sleep 0.7");
+
+        //printf("Valor guardado: [%d]\n", guarda);
+        system("sleep 1");
         system("clear");
     }  
 
