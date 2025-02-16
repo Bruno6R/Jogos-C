@@ -2,14 +2,11 @@
 1. Faça um programa que define um novo tipo de dados chamado Aluno. Cada 
 registro de Aluno deve conter: Nome do Estudante (s), Número de Matricula (i), 
 Nome do Curso (s), Média de Notas (f).
- a)
- Leia os dados de vários alunos (até o nome informado for “exit”).
- b)
- c)
- Após a fase de cadastro, pergunte ao usuário do sistema algum Número 
+ a) Leia os dados de vários alunos (até o nome informado for “exit”).
+ b) Após a fase de cadastro, pergunte ao usuário do sistema algum Número 
 de Matrícula para ser pesquisado, e encontrando o registro, imprima 
 todas as informações deste aluno.
- Repita a operação da letra B acima, até que o usuário informe um Nº de 
+ c) Repita a operação da letra B acima, até que o usuário informe um Nº de 
 matrícula negativo (para encerrar o programa).
  2. Refatore o problema anterior. Agora, toda vez que um aluno for pesquisado, 
 deve-se perguntar se o usuário deseja lançar uma nota para este aluno. Sabe-se 
