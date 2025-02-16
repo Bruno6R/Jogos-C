@@ -1,6 +1,6 @@
 /*
   Ta faltando no preenchimento normal: 
-    -Parte 3 do problema;
+    -Parte 2 e 3 do problema;
 */
 #include <stdio.h>
 #include <stdlib.h>
@@ -21,12 +21,13 @@ int main() {
     printf("É um código significativamente extenso, deseja usar valores aleatórios?(digite \"1\" para sim e \"0\" para não)\n");
     printf("(Caso os valores aleatórios forem habilitados estarão disponíveis para ver apenas o número de matrícula e a média de notas\nalém disso serão feitos apenas 10 cadastros):");
     scanf(" %d", &debug);
-    system("clear");
+   
     //1)Fazer o cadastro de estudandes
     Aluno cadastro[100];
     int qtdAl=0;
     //Lendo os dados:
     do{
+        system("clear");
         printf("Digite o nome(escreva \"exit\" para finalizar a leitura):\n");
         scanf(" %[^\n]s", cadastro[qtdAl].nome);
         //While para pegar os characteres extras:
@@ -51,12 +52,23 @@ int main() {
                     break;
                 }
         }while(existe);
-
-        printf("Média de notas:\n");
-        scanf(" %f", &cadastro[qtdAl].medNotas); 
+        
+        printf("Notas do aluno(Insira um valor negativo para encerrar o lançamento):\n");
         cadastro[qtdAl].contNotas=0;
-        while(getchar()!='\n');
-        system("clear");
+
+        for(int i=0; i<10; i++){
+            scanf(" %d", &cadastro[qtdAl].notas[i]);
+            while(getchar()!='\n');
+            if(cadastro[qtdAl].notas[i]>=0 && cadastro[qtdAl].contNotas<10)
+                cadastro[qtdAl].contNotas++; 
+            else 
+                break;
+            if(i==9){
+                printf("\nTodas as notas para esse aluno foram lançadas!\nPróximo aluno:\n");
+                system("sleep 1.7");
+            }
+        } 
+
         qtdAl++;
     }while(qtdAl<100);
 
@@ -159,15 +171,21 @@ int main() {
             //Mostrando os resultados ou pedindo para pesquisar de novo:
             if(encontrado>=0){
                 if(!debug){
-                    printf("Informações de \"%s\" número de matrícula: %d {\nNome do curso: %s\nMédia de notas: %.2f\n}", 
+                    float media=0;
+                    //fazendo a média do aluno
+                    for(int i=0; i<cadastro[encontrado].contNotas; i++)
+                        media+=cadastro[encontrado].notas[i];
+                    media /= (cadastro[encontrado].contNotas); 
+
+                    printf("Informações de \"%s\" número de matrícula: %d {\nNome do curso: %s\nMédia de notas: %.2f\n}\n", 
                         cadastro[encontrado].nome, 
                         cadastro[encontrado].numMat,
                         cadastro[encontrado].nomeCurso, 
-                        cadastro[encontrado].medNotas);
+                        media);
 
                         printf("Notas lançadas: ");
                         for(int i=0; i<(cadastro[encontrado].contNotas); i++)
-                            printf("| %02d |", cadastro[encontrado].notas[i]);
+                            printf("| %02d | ", cadastro[encontrado].notas[i]);
                         printf("\n");
                         
                         //Lançando novas notas:
