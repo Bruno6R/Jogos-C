@@ -1,7 +1,5 @@
-/*Ta faltando nos números aleatórios: 
-    -Fazer eles não se repetirem;
+/*
   Ta faltando no preenchimento normal: 
-    -Não permitir números de matrículas identicos;
     -Parte 2 e 3 do problema;
 */
 #include <stdio.h>
@@ -12,7 +10,7 @@
 //Definindo Aluno
 typedef struct{
     char nome[70], nomeCurso[70];
-    int numMat; 
+    int numMat, notas[10], contNotas;
     float medNotas;
 }Aluno;
 
@@ -41,20 +39,47 @@ int main() {
         scanf(" %[^\n]s", cadastro[qtdAl].nomeCurso);
         while(getchar()!='\n');
         printf("Número de matrícula:\n");
-        scanf(" %d", &cadastro[qtdAl].numMat);
+        //verificando se esse número de matrícula já existe:
+        int existe=0;
+        do{
+            existe=0;
+            scanf(" %d", &cadastro[qtdAl].numMat);
+            for(int i=0; i<qtdAl; i++)
+                if(cadastro[i].numMat==cadastro[qtdAl].numMat){
+                    existe=1;
+                    printf("Esse número de matrícula já está cadastrado!\nDigite novamente:\n");
+                    break;
+                }
+        }while(existe);
+
         printf("Média de notas:\n");
         scanf(" %f", &cadastro[qtdAl].medNotas); 
-
+        cadastro[qtdAl].contNotas=0;
+        while(getchar()!='\n');
+        system("clear");
         qtdAl++;
     }while(qtdAl<100);
 
     if(debug){
         qtdAl=10;
-        //colocando números aleatórios
-        for(int i=0; i<10; i++){
-            sprintf(cadastro[i].nome, "Teste da Silva"); 
-            cadastro[i].numMat=rand()%55 + 5;
-            cadastro[i].medNotas= (rand()%90) + (rand()%98 + 1)/100; 
+        //colocando números aleatórios não repetidos
+        int colMat=0;
+        while(1){
+            int existeMat=0;
+            sprintf(cadastro[colMat].nome, "Teste da Silva"); 
+            cadastro[colMat].numMat=rand()%55 + 5;
+            cadastro[colMat].medNotas= ((rand()%90) + (rand()%98 + 1)/100); //Isso aqui não ta funcionando do jeito que eu imaginei
+            //verificando se já repetiram
+            for(int i=0; i<colMat; i++)
+                if(cadastro[i].numMat==cadastro[colMat].numMat){
+                    existeMat=1; 
+                    break;
+                }
+
+            if(!existeMat && colMat<10)
+                colMat++;
+            if(colMat==10)
+                break;
         }
     }
     system("clear");
@@ -100,12 +125,20 @@ int main() {
                 erro=1;
         }
     }while(erro);
+    
 
     //Caso tenha um aluno, fazendo a busca binária:
     if(resul){
         resul=0;
-        //repetição para repetir a ação caso não for encontrado: 
+        system("clear");
+        //repetição para encontrar as informações dos alunos: 
         do{
+            //Mostrando os números de matrícula para facilitar a busca
+            printf("Nome dos alunos e seus Números de Matrícula:\n");
+            for(int i=0; i<(qtdAl); i++){
+                printf(" %-5s: [%02d]\n", cadastro[i].nome,cadastro[i].numMat);
+            }
+
             int fim=(qtdAl-1), inic=0, alvo, encontrado=-1;
             printf("Qual é o número de matrícula a ser procurado?:\n");
             scanf(" %d", &alvo);        
@@ -125,19 +158,45 @@ int main() {
 
             //Mostrando os resultados ou pedindo para pesquisar de novo:
             if(encontrado>=0){
-                if(!debug)
+                if(!debug){
                     printf("Informações de \"%s\" número de matrícula: %d {\nNome do curso: %s\nMédia de notas: %.2f\n}", 
                         cadastro[encontrado].nome, 
                         cadastro[encontrado].numMat,
                         cadastro[encontrado].nomeCurso, 
                         cadastro[encontrado].medNotas);
-                else 
+
+                        printf("Notas lançadas: ");
+                        for(int i=0; i<(cadastro[encontrado].contNotas); i++)
+                            printf("| %02d |", cadastro[encontrado].notas[i]);
+                        printf("\n");
+                        
+                        //Lançando novas notas:
+                        printf("Deseja lançar Notas para o aluno \"%s\" (s/n)?:\n", cadastro[encontrado].nome);
+                        scanf(" %c", &perg);
+                        if(perg=='s'){
+                            for(int i=cadastro[encontrado].contNotas; i<10;i++){
+                                printf("Digite a nota(escreva um valor negativo para sair):\n");
+                                scanf(" %d", &cadastro[encontrado].notas[i]);
+                                if(cadastro[encontrado].notas[i]>=0)
+                                    cadastro[encontrado].contNotas++;
+                                else
+                                    break;
+                            }
+                            //alertando
+                            if(cadastro[encontrado].contNotas==10){
+                                system("clear");
+                                printf("\nTodas as notas para esse aluno foram lançadas!\n\n");
+                            }                            
+                        }
+                }else{
                     printf("Informações de \"%s\" número de matrícula: %d {\nMédia de notas: %.2f\n}", 
                         cadastro[encontrado].nome, 
                         cadastro[encontrado].numMat, 
                         cadastro[encontrado].medNotas);
+                }
             }else
                 printf("Número de matrícula não encontrado!\n");
+            
             printf("Deseja procurar outro número de matrícula?(s/n):\n");
             do{
                 erro=0;
