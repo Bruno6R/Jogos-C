@@ -1,6 +1,6 @@
 /*
   Ta faltando no preenchimento normal: 
-    -Parte 2 e 3 do problema;
+    -Parte 3 do problema;
 */
 #include <stdio.h>
 #include <stdlib.h>
