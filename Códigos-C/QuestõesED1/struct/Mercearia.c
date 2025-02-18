@@ -1,7 +1,3 @@
-/*
-    ta dando segmentation fault em vender() depois que coloca quantos produtos tem que comprar;
-*/
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -54,7 +50,7 @@ int vender(int cod, Produto *prod){
         if(comp>=0){
             if(comp==0)
                 printf("Porque comprar 0 %s? ta bom né\n", prod->desc);
-            printf("Vai ficar R$ %d comprar %d %s!\nVai querer continuar?(s/n):\n", comp*prod->prec, comp, prod->desc);
+            printf("Vai ficar R$ %.2f comprar %d %s!\nVai querer continuar?(s/n):\n", comp*prod->prec, comp, prod->desc);
             scanf(" %c", &resp);
             while(getchar()!='\n');
             if(resp=='s'){
