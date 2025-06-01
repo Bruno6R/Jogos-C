@@ -41,10 +41,10 @@ int main () {
 
     system("sleep 1");
     system("clear");
-
+    
     //Organizando: 
     printf("Organizando os valores:\n");
-    int guarda, valorTrocado, trocando[n-1];
+    int guarda, valorTrocado;
     for(int i=1; i<n; i++){
         guarda=vetor[i]; 
         
@@ -65,12 +65,10 @@ int main () {
         system("sleep 1");
         system("clear");
 
-        int col=0;
         for(int j=(i-1); j>(-1); j--){
-            if(guarda<=vetor[j]){
+            if(guarda<=vetor[j])
                 vetor[j+1] = vetor[j];
-                trocando[col++]=j;
-            }else{
+            else{
                 vetor[j+1] = guarda;
                 valorTrocado=(j+1); 
                 break;
