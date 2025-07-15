@@ -10,7 +10,7 @@ typedef Node* Object;
 
 Object new_Node(){
 	Object no=malloc(sizeof(Node));
-	no->item=NULL;
+	no->item=NULL;   
 	no->next=NULL;
 	no->prev=NULL;
 	return no;
@@ -33,4 +33,9 @@ void printInt(Object self){
 	int *v=self->item;
 	int a=*v;
 	printf("(%d)\n", a);
+}
+
+void destroy(Object obj){
+	free(obj);
+	obj->item=NULL;
 }

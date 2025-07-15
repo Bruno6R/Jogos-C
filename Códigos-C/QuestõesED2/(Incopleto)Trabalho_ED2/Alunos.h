@@ -21,5 +21,9 @@ void setAluno(Object aluno, char *nome, int mat){
 
 void printAl(Object aluno){
 	Aluno *self=aluno->item;
+	if(!self){
+		printf("O aluno não existe!\n");
+		return;
+	}
 	printf("Nome: %s / Matrícula: %d\n", self->nome, self->matricula);
 }

@@ -31,9 +31,9 @@ void printList(Object lista){
 	}while(alun);
 }
 
-void listPushEnd(Object lista, Object obj){
+void listEnQueue(Object lista, Object obj){
 	List lis = lista->item;
-	if(!lis){
+	if(!lis->init){
 		lis->init=obj;
 		lis->end=lis->init;
 		lis->size=1;
@@ -43,5 +43,37 @@ void listPushEnd(Object lista, Object obj){
 	obj->prev=lis->end;
 	lis->end=obj;
 	obj->prev->next=obj;
+	lis->size++;
 	return;
 }
+
+void listPush(Object lista, Object obj){
+	List lis = lista->item;
+	if(!lis->init){
+		lis->init=obj;
+		lis->end=lis->init;
+		lis->size=1;
+		return;
+	}
+	
+	obj->next=lis->init;
+	lis->init=obj;
+	obj->next->prev=obj;
+	lis->size++;
+	return;
+}
+
+Object listPop(Object lista, Object obj){
+	List lst=lista->item; 
+	if(!lst->init){
+		printf("Não é possível remover pois a lista é null\n");
+		return lista;
+	}
+	
+	Object aux=lst->init; 
+	lst->init=aux->next;
+	aux->next->prev=NULL;
+	aux->next=NULL;
+	return aux;
+}
+
