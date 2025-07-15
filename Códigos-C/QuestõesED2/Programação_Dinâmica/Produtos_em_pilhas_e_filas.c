@@ -17,7 +17,7 @@ typedef struct ProdutoFil{
 	float valor; 
 	int qtd, id;
 	char nome[20];
-	struct ProdutoFil* novo;  
+	struct ProdutoFil* prox;  
 }ProdutoFil;
 
 void ov(){
@@ -60,7 +60,7 @@ void mostrarProdutosFil(ProdutoFil* inicio){
 		printf("Nome: %s\nID: %d\nValor: %.2f\nQuantidade: %d\n",
 		inicio->nome, inicio->id, inicio->valor, inicio->qtd);
 		
-		inicio = inicio->novo;
+		inicio = inicio->prox;
 	}
 	printf("\n");
 }
@@ -76,58 +76,75 @@ void mostrarProdutosPil(ProdutoPil* prod){
 	printf("\n");
 }
 
+void mostrarTodosProds(ProdutoPil* topoPilha, ProdutoFil* inicioDaFila){
+	printf("Pilha:\n");
+	if(!topoPilha)
+		printf("{NULL}");
+	mostrarProdutosPil(topoPilha);
+	enter();
+	printf("Fila:\n");
+	if(!inicioDaFila)
+		printf("{NULL}");
+	mostrarProdutosFil(inicioDaFila);
+	enter();	
+}
+
 ProdutoFil* setNovoProdFil(ProdutoFil* fim, int *id){
-	ProdutoFil* produto;
-	produto = malloc(sizeof(ProdutoFil));
+	ProdutoFil* novoProd;
+	novoProd = malloc(sizeof(ProdutoFil));
+	
 	printf("Digite o nome do produto: ");
-	scanf(" %19[^\n]s", produto->nome);
+	scanf(" %19[^\n]s", novoProd->nome);
 	ov();
-	input("Digite o valor do produto: ", FLOAT, &produto->valor);
+	input("Digite o valor do produto: ", FLOAT, &novoProd->valor);
 	ov();
-	input("Quantos tem?: ", INT, &produto->qtd); 
+	input("Quantos tem?: ", INT, &novoProd->qtd); 
 	ov();
 	*id += 1;
-	produto->id = *id;
+	novoProd->id = *id;
 	
 	if(fim)
-		fim->novo = produto;
+		fim->prox = novoProd;
 		
-	produto->novo = NULL;
+	novoProd->prox = NULL;
 	printf("Produto adicionado!\n");
 	enter();
-	return produto;
+	return novoProd;
 }
 
 ProdutoPil* setNovoProdPil(ProdutoPil* antes, int *id){
-	ProdutoPil* produto;
-	produto = malloc(sizeof(ProdutoPil));
+	ProdutoPil* novoProd;
+	novoProd = malloc(sizeof(ProdutoPil));
+	
 	printf("Digite o nome do produto: ");
-	scanf(" %19[^\n]s", produto->nome);
+	scanf(" %19[^\n]s", novoProd->nome);
 	ov();
-	input("Digite o valor do produto: ", FLOAT, &produto->valor);
+	input("Digite o valor do produto: ", FLOAT, &novoProd->valor);
 	ov();
-	input("Quantos tem?: ", INT, &produto->qtd); 
+	input("Quantos tem?: ", INT, &novoProd->qtd); 
 	ov();
 	*id += 1;
-	produto->id = *id;
-	produto->anterior = antes;
+	novoProd->id = *id;
+	
+	novoProd->anterior = antes;
 	printf("Produto adicionado!\n");
 	enter();
-	return produto;
+	return novoProd;
 }
 
 int main(){
-	ProdutoPil* listaProdPil = NULL;
+	ProdutoPil* topoPilha = NULL;
 	
 	ProdutoFil* inicioDaFila = NULL;
 	ProdutoFil* fimDaFila = NULL;
 	int id=0;
+	
 	while(1){
 		switch(interface()){
 			case 0:
 				return 0; 
 			case 1:
-				listaProdPil = setNovoProdPil(listaProdPil, &id); 
+				topoPilha = setNovoProdPil(topoPilha, &id); 
 				break; 
 			case 2: 
 				fimDaFila = setNovoProdFil(fimDaFila, &id);
@@ -135,15 +152,10 @@ int main(){
 					inicioDaFila = fimDaFila; 
 				break;
 			case 3:
-				printf("Pilha:\n");
-				mostrarProdutosPil(listaProdPil);
-				enter();
-				printf("Fila:\n");
-				mostrarProdutosFil(inicioDaFila);
-				enter();
+				mostrarTodosProds(topoPilha, inicioDaFila);
 				break;
 			default:
-				printf("Opção inválida!");
+				printf("Opção inválida!\n");
 				enter();
 		}
 	}

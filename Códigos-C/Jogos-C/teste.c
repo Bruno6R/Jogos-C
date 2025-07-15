@@ -2,7 +2,6 @@
 #include <stdlib.h> 
 #include <string.h> 
 #include <time.h> 
-//Essa função ficou a coisa mais horrorosa que eu já vi, mas funciona(eu acho, pelo menos parece funcionar)
 //Ela não funciona.
 int embaralha(int cartas[7], int qual, int ultC, int ultZ) {
     int alea=rand()%4 + 2;

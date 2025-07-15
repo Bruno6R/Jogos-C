@@ -118,6 +118,7 @@ int lancarNotas(Disciplina diss, Discente *alunos){
     if(!buscAl(diss, op))
         printf("Esse código não existe!\n");
     else{
+        op--;
         int on = desclocal(alunos[op], diss.cod);
         if(on<0){
             printf("\nERRO!\n");
