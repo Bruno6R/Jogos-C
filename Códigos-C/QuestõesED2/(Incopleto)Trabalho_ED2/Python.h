@@ -36,6 +36,6 @@ void printInt(Object self){
 }
 
 void destroy(Object obj){
+	free(obj->item);
 	free(obj);
-	obj->item=NULL;
 }

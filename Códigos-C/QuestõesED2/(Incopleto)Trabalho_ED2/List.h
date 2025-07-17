@@ -16,7 +16,7 @@ Object new_List(){
 	return novo;
 }
 
-void printList(Object lista){
+void printListAl(Object lista){
 	List lst = lista->item;
 	
 	if(!lst->init){
@@ -24,11 +24,27 @@ void printList(Object lista){
 		return;
 	}
 	
-	Object alun=lst->init;
+	Object self=lst->init;
 	do{
-		printAl(alun);
-		alun=alun->next;
-	}while(alun);
+		printAl(self);
+		self=self->next;
+	}while(self);
+}
+
+
+void printListProf(Object lista){
+	List lst = lista->item;
+	
+	if(!lst->init){
+		printf("Não existe lista!\n");
+		return;
+	}
+	
+	Object self=lst->init;
+	do{
+		printProf(self);
+		self=self->next;
+	}while(self);
 }
 
 void listEnQueue(Object lista, Object obj){
@@ -76,4 +92,3 @@ Object listPop(Object lista, Object obj){
 	aux->next=NULL;
 	return aux;
 }
-

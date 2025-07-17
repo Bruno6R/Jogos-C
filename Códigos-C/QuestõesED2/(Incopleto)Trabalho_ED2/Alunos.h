@@ -25,5 +25,5 @@ void printAl(Object aluno){
 		printf("O aluno não existe!\n");
 		return;
 	}
-	printf("Nome: %s / Matrícula: %d\n", self->nome, self->matricula);
+	printf("Nome do Aluno: %s / Matrícula: %d\n", self->nome, self->matricula);
 }
