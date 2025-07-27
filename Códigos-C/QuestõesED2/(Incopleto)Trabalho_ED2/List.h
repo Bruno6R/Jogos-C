@@ -8,7 +8,7 @@ typedef struct _List{
 	Object (*pop)();
 	Object (*pull)();
 	void (*printAll)();
-	void (*print)(Object, TypeObject);
+	void (*print)();
 }_List;
 
 typedef _List* List;
@@ -21,8 +21,7 @@ void setObjectIdInList(List lst, Object obj){
 		obj->id=1;
 }
 
-int listVerify(Object lista, TypeObject who){
-	List lst=lista->item; 
+int listVerify(List lst, TypeObject who){
 	
 	//verificação genérica
 	if(who<0){
@@ -41,7 +40,7 @@ int listVerify(Object lista, TypeObject who){
 	return 0;
 }
 
-int verifyErr(Object lista, char* msg, TypeObject who){
+int verifyErr(List lista, char* msg, TypeObject who){
 	int exist = listVerify(lista, who);
 	
 	if(!exist){
@@ -51,8 +50,7 @@ int verifyErr(Object lista, char* msg, TypeObject who){
 	return 0;
 }
 
-void listEnQueue(Object lista, Object obj){
-	List lis = lista->item;
+void listEnQueue(List lis, Object obj){
 	if(!lis->init){
 		lis->init=obj;
 		lis->end=lis->init;
@@ -99,8 +97,7 @@ Object listPop(Object lista){
 	return aux;
 }
 
-Object listPull(Object lista, Object alvo){
-	List lst = lista->item;
+Object listPull(List lst, Object alvo){
 	if(lst->init==alvo)
 		lst->init=alvo->next;
 	if(lst->end==alvo)	
@@ -115,10 +112,9 @@ Object listPull(Object lista, Object alvo){
 	return alvo;
 }
 
-void listPrintAll(Object lista){
-	List lst=lista->item;
+void listPrintAll(List lst){
 	
-	if(verifyErr(lista, "Não existe nada na lista!", -1))
+	if(verifyErr(lst, "Não existe nada na lista!", -1))
 		return;
 	
 	//printando toda a lista
@@ -129,10 +125,8 @@ void listPrintAll(Object lista){
 	}while(aux);
 }
 
-void listPrint(Object lista, TypeObject who){
-	List lst = lista->item; 
-	
-	if(verifyErr(lista, "Vazio", who))
+void listPrint(List lst, TypeObject who){
+	if(verifyErr(lst, "Vazio", who))
 		return;
 	
 	Object aux = lst->init; 
@@ -143,10 +137,8 @@ void listPrint(Object lista, TypeObject who){
 	}while(aux);
 }
 
-Object new_List(){
-	Object novo=new(Node);
-	novo->item=malloc(sizeof(_List));
-	List lst=novo->item;
+List new_List(){
+	List lst=malloc(sizeof(List));
 	lst->init=NULL;
 	lst->end=NULL;
 	lst->size=0;
@@ -158,5 +150,5 @@ Object new_List(){
 	lst->pull = listPull; 
 	lst->printAll = listPrintAll; 
 	lst->print = listPrint;
-	return novo;
+	return lst;
 }

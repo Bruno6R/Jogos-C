@@ -28,6 +28,7 @@ Object new_Disciplina(){
 	novo->item=malloc(sizeof(Disciplina));
 	
 	Disciplina *self=novo->item;
+	
 	//setando
 	self->codDis=0;
 	strcpy(self->nomeDis, "{NULL}");

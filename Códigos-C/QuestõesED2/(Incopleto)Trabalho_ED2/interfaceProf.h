@@ -11,11 +11,10 @@ int interfaceProf(){
 	return esc;
 }
 
-void cadastrarProfessor(Object lista){
+void cadastrarProfessor(List lst){
 	char nome[45];
 	int id=0;
 	int sal=0;
-	List lst = lista->item;
 		
 	printf("Qual é o nome do Professor?:\n"); 
 	scanf(" %44[^\n]s", nome); 
@@ -30,13 +29,12 @@ void cadastrarProfessor(Object lista){
 	
 	id=prof->id;
 	prof->set(prof, nome, id, sal);
-	listEnQueue(lista, prof);
+	listEnQueue(lst, prof);
 	printf("Professor Criado!\n");
 	enter();
 }
 
-Object searchProf(Object lista, int id){
-	List lst = lista->item;
+Object searchProf(List lst, int id){
 	
 	Object aux = lst->init;
 	while(aux){
@@ -54,14 +52,13 @@ Object searchProf(Object lista, int id){
 	return NULL;
 }
 
-void deletarProf(Object lst){
-	List lista = lst->item;
+void deletarProf(List lst){
 	
 	//verifica a existência de professores
 	if(verifyErr(lst, "Não existem professores cadstrados!", PROFESSOR))
 		return;
 	
-	lista->print(lst, PROFESSOR);
+	lst->print(lst, PROFESSOR);
 	printf("\nDigite o número do ID do Professor que deseja excluir:\n");
 	int id;
 	scanf(" %d", &id);
@@ -77,11 +74,10 @@ void deletarProf(Object lst){
 	printf("Professor excluído\n");
 }
 
-void deletarTodosProf(Object lista){
-	List lst = lista->item;
+void deletarTodosProf(List lst){
 	
 	//verificando a existência de professores na lista
-	if(verifyErr(lista, "Não existem professores cadastrados!", PROFESSOR))
+	if(verifyErr(lst, "Não existem professores cadastrados!", PROFESSOR))
 		return;
 	
 	printf("Tem certeza que deseja apagar todos os Professores?(essa ação não pode ser desfeita)\n");
@@ -107,15 +103,14 @@ void deletarTodosProf(Object lista){
 		}
 		
 		prox = aux->next;
-		Object deletar = lst->pull(lista, aux);
+		Object deletar = lst->pull(lst, aux);
 		deletar->destroy(deletar);
 		aux=prox;
 	}
 	printf("Todos os professores foram apagados!\n");
 }
 
-void interProfessor(Object lst){
-	List lista = lst->item;
+void interProfessor(List lst){
 	while(1)
 		switch(interfaceProf()){
 			case 0: 	
@@ -124,7 +119,7 @@ void interProfessor(Object lst){
 				cadastrarProfessor(lst);
 				break;
 			case 2:
-				lista->print(lst, PROFESSOR);
+				lst->print(lst, PROFESSOR);
 				enter();
 				break;
 			case 3:

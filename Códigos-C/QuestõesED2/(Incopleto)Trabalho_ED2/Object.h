@@ -29,6 +29,7 @@ void destroy(Object obj){
 
 Object new_Node(){
 	Object no=malloc(sizeof(Node));
+	
 	no->item=NULL;   
 	no->next=NULL;
 	no->prev=NULL;

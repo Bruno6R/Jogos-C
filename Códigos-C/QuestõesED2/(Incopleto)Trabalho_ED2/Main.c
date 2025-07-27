@@ -22,7 +22,8 @@ int interface(){
 
 
 //Problemas:
-//-A lista está em formato de objeto, é preciso mudar para tipo 'List';
+//-Existe um erro ao cadastrar objetos. Ao setar 'no->item=NULL' 3 vezes,
+//o código da erro(dentro de 'new(Node)';
 //-Colocar as funções relacionadas a lista dentro da struct da lista;
 //-Implementar um jeito de cancelar as operações;
 //-O 'listPrintAll' ta esquisito, testar isso depois;
@@ -31,7 +32,7 @@ int interface(){
 //-Adicionar um 'system("clear")' nos lugares corretos;
 
 int main(){
-	Object lst = new(List);
+	List lst = new(List);
 	
 	while(1)
 		switch(interface()){

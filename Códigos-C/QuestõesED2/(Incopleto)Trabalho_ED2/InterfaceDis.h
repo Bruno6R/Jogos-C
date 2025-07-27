@@ -11,9 +11,8 @@ int interfaceDis(){
 	return esc;
 }
 
-Object searchDis(Object lista, int codDis){
-	List lst = lista->item;
-	
+Object searchDis(List lst, int codDis){
+
 	Object aux = lst->init;
 	do{
 		if(aux && aux->type!=DISCIPLINA){
@@ -30,10 +29,9 @@ Object searchDis(Object lista, int codDis){
 	return NULL;
 }
 
-void cadastrarDisciplina(Object lista){
+void cadastrarDisciplina(List lst){
 	char nomeDis[45];
 	int codDis=0;
-	List lst = lista->item;
 	
 	printf("Qual é o nome da disciplina?:\n"); 
 	scanf(" %44[^\n]s", nomeDis); 
@@ -43,41 +41,37 @@ void cadastrarDisciplina(Object lista){
 	Object disciplina = new(Disciplina);
 	//setando obj id em uma lista
 	setObjectIdInList(lst, disciplina);
-	
 	codDis = disciplina->id;
 	setDisciplina(disciplina, nomeDis, codDis);
-	listEnQueue(lista, disciplina);
+	listEnQueue(lst, disciplina);
 	printf("Disciplina Criada!\n");
 	enter();
 }
 
-void deletarDis(Object lista){	
-	List lst = lista->item;
+void deletarDis(List lst){	
 
-	if(verifyErr(lista, "Não existem Disciplinas cadastradas!", DISCIPLINA))
+	if(verifyErr(lst, "Não existem Disciplinas cadastradas!", DISCIPLINA))
 		return;
 	
-	lst->print(lista, DISCIPLINA);
+	lst->print(lst, DISCIPLINA);
 	printf("\nDigite o código de Disciplina que deseja excluir:\n");
 	int id;
 	scanf(" %d", &id);
 	ov();
-	Object alvo = searchDis(lista, id); 
+	Object alvo = searchDis(lst, id); 
 	if(!alvo){
 		printf("Não existe uma Disciplina com esse código!\n");
 		enter();
 		return;
 	}
-	listPull(lista, alvo);
+	listPull(lst, alvo);
 	destroy(alvo);
 	printf("Disciplina excluída!\n");
 }
 
-void deletarTodosDis(Object lista){
-		
-	List lst = lista->item;
+void deletarTodosDis(List lst){
 	
-	if(verifyErr(lista, "Não existem Disciplinas cadastradas!", DISCIPLINA))
+	if(verifyErr(lst, "Não existem Disciplinas cadastradas!", DISCIPLINA))
 		return;
 	
 	printf("Tem certeza que deseja apagar todos os alunos?(essa ação não pode ser desfeita)\n");
@@ -102,15 +96,14 @@ void deletarTodosDis(Object lista){
 		}
 		
 		prox=aux->next;
-		Object deletar = lst->pull(lista, aux);
+		Object deletar = lst->pull(lst, aux);
 		deletar->destroy(deletar);
 		aux=prox;
 	}
 	printf("Todas as Disciplinas foram apagadas!\n");
 }
 
-void interDisciplina(Object lst){
-	List lista = lst->item;
+void interDisciplina(List lst){
 	while(1)
 		switch(interfaceDis()){
 			case 0: 
@@ -119,7 +112,7 @@ void interDisciplina(Object lst){
 				cadastrarDisciplina(lst);
 				break;
 			case 2: 
-				lista->print(lst, DISCIPLINA);
+				lst->print(lst, DISCIPLINA);
 				enter();
 				break;
 			case 3:
