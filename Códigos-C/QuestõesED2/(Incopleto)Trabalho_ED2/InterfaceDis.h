@@ -14,8 +14,8 @@ int interfaceDis(){
 Object searchDis(List lst, int codDis){
 
 	Object aux = lst->init;
-	do{
-		if(aux && aux->type!=DISCIPLINA){
+	while(aux){
+		if(aux->type!=DISCIPLINA){
 			aux=aux->next;
 			continue;
 		}
@@ -24,7 +24,7 @@ Object searchDis(List lst, int codDis){
 		if(dis->codDis==codDis)
 			return aux;
 		aux=aux->next;
-	}while(aux);
+	}
 	
 	return NULL;
 }
@@ -40,10 +40,10 @@ void cadastrarDisciplina(List lst){
 	//setando 
 	Object disciplina = new(Disciplina);
 	//setando obj id em uma lista
-	setObjectIdInList(lst, disciplina);
 	codDis = disciplina->id;
-	setDisciplina(disciplina, nomeDis, codDis);
-	listEnQueue(lst, disciplina);
+	
+	disciplina->set(disciplina, nomeDis, codDis);
+	lst->enQueue(lst, disciplina);
 	printf("Disciplina Criada!\n");
 	enter();
 }
@@ -58,14 +58,14 @@ void deletarDis(List lst){
 	int id;
 	scanf(" %d", &id);
 	ov();
-	Object alvo = searchDis(lst, id); 
+	Object alvo = lst->search(lst, id); 
 	if(!alvo){
 		printf("Não existe uma Disciplina com esse código!\n");
 		enter();
 		return;
 	}
-	listPull(lst, alvo);
-	destroy(alvo);
+	lst->pull(lst, alvo);
+	alvo->destroy(alvo);
 	printf("Disciplina excluída!\n");
 }
 
@@ -78,6 +78,7 @@ void deletarTodosDis(List lst){
 	printf("1.Sim, eu tenho certeza!\n");
 	printf("2.Pensando bem... acho melhor não\n");  
 	int esco;
+	//aqui
 	scanf(" %d", &esco);
 	ov();
 	esco--;
@@ -104,6 +105,7 @@ void deletarTodosDis(List lst){
 }
 
 void interDisciplina(List lst){
+	lst->search = searchDis;
 	while(1)
 		switch(interfaceDis()){
 			case 0: 

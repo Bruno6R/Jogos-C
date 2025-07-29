@@ -20,6 +20,8 @@ typedef struct Node{
 	void (*destroy)();
 }Node;
 
+int id=1;
+
 typedef Node* Object;
 
 void destroy(Object obj){
@@ -36,6 +38,8 @@ Object new_Node(){
 	no->destroy = destroy;
 	no->set = NULL;
 	no->print = NULL;
+	no->id = id;
+	id++;
 	return no;
 }
 
@@ -46,3 +50,4 @@ Object new_Int(){
 	*v=0;
 	return novo;
 }
+

@@ -20,21 +20,18 @@ int interface(){
 	return esc;
 }
 
-
 //Problemas:
-//-Existe um erro ao cadastrar objetos. Ao setar 'no->item=NULL' 3 vezes,
-//o código da erro(dentro de 'new(Node)';
-//-Colocar as funções relacionadas a lista dentro da struct da lista;
-//-Implementar um jeito de cancelar as operações;
+//-Linha 82:Interface Dis. Mudar para while-case
+//-Mudar o id, fazer com índice;
+//-Implementar uma maneira de cancelar as ações;
 //-O 'listPrintAll' ta esquisito, testar isso depois;
-//-Um função para editar os dados;
 //-Implementar um jeito de cadastrar um professor como responsável de uma disciplina;
+//-Um função para editar os dados;
 //-Adicionar um 'system("clear")' nos lugares corretos;
 
 int main(){
 	List lst = new(List);
-	
-	while(1)
+	while(1){
 		switch(interface()){
 			case 0: 
 				return 0;
@@ -48,4 +45,6 @@ int main(){
 				printf("Opção inválida!\n"); 
 				enter();
 		}
+	}
+	return 0;
 }

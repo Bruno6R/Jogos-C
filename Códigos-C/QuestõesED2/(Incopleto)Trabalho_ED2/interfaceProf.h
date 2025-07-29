@@ -14,22 +14,19 @@ int interfaceProf(){
 void cadastrarProfessor(List lst){
 	char nome[45];
 	int id=0;
-	int sal=0;
+	double sal=0;
 		
 	printf("Qual é o nome do Professor?:\n"); 
 	scanf(" %44[^\n]s", nome); 
 	printf("Qual é o salário de %s?:\n", nome);
-	scanf(" %i", &sal);
+	scanf(" %lf", &sal);
 	
 	//setando 
 	Object prof = new(Professor);
 	
-	//setando id
-	setObjectIdInList(lst, prof);
-	
 	id=prof->id;
 	prof->set(prof, nome, id, sal);
-	listEnQueue(lst, prof);
+	lst->enQueue(lst, prof);
 	printf("Professor Criado!\n");
 	enter();
 }
@@ -63,14 +60,13 @@ void deletarProf(List lst){
 	int id;
 	scanf(" %d", &id);
 	ov();
-	Object alvo = searchProf(lst, id);
+	Object alvo = lst->search(lst, id);
 	if(!alvo){
 		printf("Não existe um professor com esse ID!\n");
-		enter();
 		return;
 	}
-	listPull(lst, alvo);
-	destroy(alvo);
+	lst->pull(lst, alvo);
+	alvo->destroy(alvo);
 	printf("Professor excluído\n");
 }
 
@@ -111,6 +107,7 @@ void deletarTodosProf(List lst){
 }
 
 void interProfessor(List lst){
+	lst->search=searchProf;
 	while(1)
 		switch(interfaceProf()){
 			case 0: 	

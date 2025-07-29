@@ -9,17 +9,10 @@ typedef struct _List{
 	Object (*pull)();
 	void (*printAll)();
 	void (*print)();
+	Object (*search)();
 }_List;
 
 typedef _List* List;
-
-void setObjectIdInList(List lst, Object obj){
-	if(lst->init){
-		Object aux=lst->end; 
-		obj->id=aux->id + 1;
-	}else
-		obj->id=1;
-}
 
 int listVerify(List lst, TypeObject who){
 	
@@ -65,8 +58,7 @@ void listEnQueue(List lis, Object obj){
 	return;
 }
 
-void listPush(Object lista, Object obj){
-	List lis = lista->item;
+void listPush(List lis, Object obj){
 	if(!lis->init){
 		lis->init=obj;
 		lis->end=lis->init;
@@ -138,7 +130,7 @@ void listPrint(List lst, TypeObject who){
 }
 
 List new_List(){
-	List lst=malloc(sizeof(List));
+	List lst=malloc(sizeof(_List));
 	lst->init=NULL;
 	lst->end=NULL;
 	lst->size=0;
@@ -150,5 +142,6 @@ List new_List(){
 	lst->pull = listPull; 
 	lst->printAll = listPrintAll; 
 	lst->print = listPrint;
+	lst->search = NULL;
 	return lst;
 }
