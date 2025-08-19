@@ -20,6 +20,17 @@
 		system("clear");
 	}
 #endif
+
+//CORES
+#define PRETO "\033[30m"
+#define VERMELHO "\033[31m"
+#define VERDE "\033[32m"
+#define AMARELO "\033[33m"
+#define AZUL "\033[34m"
+#define ROXO "\033[35m"
+#define CIANO "\033[36m"
+#define FIM_COR "\033[0m"
+
 void preencherVetor(int *vetor, int tam){
 	for(int i=0; i<tam; i++)
 		vetor[i] = rand()%100; 
@@ -32,11 +43,11 @@ void mostrarVetor(int *vetor, int tam){
 }
 
 void ov(){
-	while(getchar()!='\n'); 
+	int a=0;
+	while((a = getchar())!='\n' && a!=EOF); 
 }
 
 void enter(){
-	setbuf(stdin, NULL); 
 	printf("Aperte ENTER para continuar...\n");
 	ov();
 }
